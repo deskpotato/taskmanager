@@ -13,7 +13,7 @@
                 <span aria-hidden="true">&times;</span>
             </button>
             </div>
-            {!! Form::open(['route'=>'projects.store','method'=>'post','files'=>true]) !!}
+            {!! Form::open(['route'=>'projects.store','method'=>'POST','files'=>true]) !!}
                 <div class="modal-body">
                         <div class="form-group">
                             {!! Form::label('name', '项目名称：') !!}
@@ -25,7 +25,16 @@
                             {!! Form::file('thumbnail', ['class'=>'form-control-file']) !!}
                         </div>
                     
-                        @include('errors._errors')
+                        {{-- @include('errors._errors') --}}
+
+                        @if ($errors->create->any())
+                            <ul class="alert alert-danger">
+                                @foreach ($errors->create->all() as $error)
+                                    <li>{{$error}}</li>
+                                @endforeach
+                            </ul>
+
+                        @endif
                     
                 </div>
                 <div class="modal-footer">

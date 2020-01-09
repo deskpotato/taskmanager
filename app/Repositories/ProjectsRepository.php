@@ -1,5 +1,7 @@
 <?php
 namespace App\Repositories;
+
+use App\Project;
 use Image;
 class ProjectsRepository 
 {
@@ -9,6 +11,26 @@ class ProjectsRepository
             'name'=>$request->name,
             'thumbnail'=>$this->thumb($request),
         ]);   
+    }
+
+    public function find($id)
+    {
+        return Project::findOrFail($id);
+    }
+    public function delete($id)
+    {
+        $project = $this->find($id);
+        $project->delete();
+    }
+
+    public function update($request,$id)
+    {
+        $project = $this->find($id);
+        $project->name = $request->name;
+        if($request->hasFile('thumbnail')){
+            $project->thumbnail = $this->thumb($request);
+        }
+        $project->save();
     }
 
     public function thumb($request)
@@ -25,4 +47,6 @@ class ProjectsRepository
             return $name;
         }
     }
+
+
 }

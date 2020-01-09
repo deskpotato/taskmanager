@@ -4,11 +4,12 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Validation\ValidationException;
 
-class CreateProjectRequest extends FormRequest
+class UpdateProjectRequest extends FormRequest
 {
 
-    protected $errorBag = 'create';
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -16,11 +17,10 @@ class CreateProjectRequest extends FormRequest
      */
     public function authorize()
     {
-        //false => true
         return true;
     }
 
-    /**
+   /**
      * Get the validation rules that apply to the request.
      *
      * @return array
@@ -45,5 +45,11 @@ class CreateProjectRequest extends FormRequest
             'thumbnail.image'=>'请上传一个文件~',
             'thumbnail.dimensions'=>'图片尺寸必须是xx*yy~',
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        $this->errorBag = 'update-'.$this->route('project');
+        parent::failedValidation($validator);
     }
 }

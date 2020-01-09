@@ -3,7 +3,11 @@
 @section('content')
 <div class="container">
 
-    @if (count($projects) > 0)
+    <div class="card-deck">
+        @each('projects._card', $projects, 'project')
+    </div>
+
+    {{-- @if (count($projects) > 0)
     
         <div class="card-deck">
         
@@ -20,10 +24,25 @@
             @endforeach
         
         </div>
-    @endif
+    @else
+        <div> no projects for current user</div>    
+    @endif --}}
 
 
     @include('projects._createModel')
 
 </div>
+@endsection
+
+@section('customJS')
+
+<script>
+    $(document).ready(function(){
+        $('.icon-bar').hide();
+        $('.project-card').hover(function(){
+            $(this).find('.icon-bar').toggle();
+        })
+    })
+</script>
+    
 @endsection
