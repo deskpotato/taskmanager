@@ -1,5 +1,5 @@
 <div class="col-3 my-3">
-<div href="projects/{{$project->id}}" class="card project-card">
+<div href="{{route('projects.show',$project->id)}}" class="card project-card">
     <ul class="icon-bar">
         <li>
            @include('projects._deleteForm')
@@ -10,7 +10,7 @@
         </button>
         </li>
     </ul>
-    <a href="projects/{{$project->id}}">
+<a href="{{route('projects.show',$project->id)}}">
         <img src="{{asset('storage/thumbs/original/'.$project->thumbnail)}}" class="card-img-top" alt="">
     </a>
         <div class="card-body">

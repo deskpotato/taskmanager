@@ -5,6 +5,15 @@
 
     <div class="card-deck">
         @each('projects._card', $projects, 'project')
+        <div class="col-3 my-3">
+            <div class="card">
+                <div class="card-body d-flex align-items-center justify-content-center">
+
+                    @include('projects._createModel')
+
+                </div>
+            </div>
+        </div>
     </div>
 
     {{-- @if (count($projects) > 0)
@@ -28,8 +37,6 @@
         <div> no projects for current user</div>    
     @endif --}}
 
-
-    @include('projects._createModel')
 
 </div>
 @endsection

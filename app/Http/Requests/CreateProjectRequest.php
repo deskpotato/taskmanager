@@ -34,7 +34,7 @@ class CreateProjectRequest extends FormRequest
                     return $query->where('user_id',request()->user()->id);
                 })
         ],
-            'thumbnail'=>'image|dimensions:min_width=260,min_height=100'
+            'thumbnail'=>'image|dimensions:min_width=260,min_height=90|max:2048'
         ];
     }
     public function messages()
@@ -44,6 +44,7 @@ class CreateProjectRequest extends FormRequest
             'name.unique'=>'项目名称必须是唯一的~',
             'thumbnail.image'=>'请上传一个文件~',
             'thumbnail.dimensions'=>'图片尺寸必须是xx*yy~',
+            'thumbnail.max'=>'不要上传超过2M的文件',
         ];
     }
 }

@@ -28,22 +28,23 @@ class UpdateProjectRequest extends FormRequest
     public function rules()
     {
         return [
+           
             'name'=>[
                 'required',
-                Rule::unique('projects')->where(function($query){
+                Rule::unique('projects')->ignore($this->route('project'))->where(function($query){
                     return $query->where('user_id',request()->user()->id);
                 })
-        ],
-            'thumbnail'=>'image|dimensions:min_width=260,min_height=100'
+            ],
+            'thumbnail'=>'image|dimensions:min_width=260,min_height=90|max:2048'
         ];
     }
     public function messages()
     {
         return [
             'name.required'=>'项目名称必填~',
-            'name.unique'=>'项目名称必须是唯一的~',
             'thumbnail.image'=>'请上传一个文件~',
             'thumbnail.dimensions'=>'图片尺寸必须是xx*yy~',
+            'thumbnail.max'=>'不要上传超过2M的文件',
         ];
     }
 

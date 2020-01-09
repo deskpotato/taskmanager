@@ -15,8 +15,16 @@ class ProjectsController extends Controller
     public function __construct(ProjectsRepository $repo)
     {
         $this->repo  = $repo;
+        $this->middleware('auth');
     }
 
+
+    public function index()
+    {
+        $projects  = $this->repo->list();
+        
+        return  view('welcome',compact('projects')); 
+    }
 
     public function store(CreateProjectRequest $request)
     {
@@ -39,11 +47,28 @@ class ProjectsController extends Controller
     }
 
 
+    public function show(Project $project)
+    {
+        
+        $todos  =$this->repo->todos($project);
+        $dones  =$this->repo->dones($project);
+
+        $projects = auth()->user()->projects()->pluck('name','id');
+
+        return view('projects.show',compact('project','todos','dones','projects'));
+    }
+
+
+
     public function update(UpdateProjectRequest $request, $id)
     {
         $this->repo->update($request,$id);
         return back();
     }
+   
+
+
+
 
 
   
