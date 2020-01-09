@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateProjectRequest;
 use App\Project;
 use App\Repositories\ProjectsRepository;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
 class ProjectsController extends Controller
 {
@@ -17,10 +17,12 @@ class ProjectsController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(CreateProjectRequest $request)
     {
 
         $this->repo->create($request);
+        //返回上一页
+        return back();
     }
 
 
