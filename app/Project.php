@@ -10,6 +10,11 @@ class Project extends Model
         'name','thumbnail'
     ];
     
+    public function getThumbnailAttribute($value)
+    {
+        return $value??'flower.jpg';
+    }
+
     public function user()
     {
         return $this->belongsTo('App\User');    

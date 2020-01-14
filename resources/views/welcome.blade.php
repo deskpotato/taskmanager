@@ -6,7 +6,7 @@
     <div class="card-deck">
         @each('projects._card', $projects, 'project')
         <div class="col-3 my-3">
-            <div class="card">
+            <div class="card h-100">
                 <div class="card-body d-flex align-items-center justify-content-center">
 
                     @include('projects._createModel')

@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateProjectRequest;
 use App\Project;
 use App\Repositories\ProjectsRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class ProjectsController extends Controller
 {
@@ -49,9 +50,10 @@ class ProjectsController extends Controller
 
     public function show(Project $project)
     {
-        
         $todos  =$this->repo->todos($project);
         $dones  =$this->repo->dones($project);
+
+
 
         $projects = auth()->user()->projects()->pluck('name','id');
 

@@ -11,6 +11,9 @@
         </li>
     </ul>
 <a href="{{route('projects.show',$project->id)}}">
+    {{-- @php
+        $thumb = $project->thumbnail ?? 'flower.jpg';
+    @endphp --}}
         <img src="{{asset('storage/thumbs/original/'.$project->thumbnail)}}" class="card-img-top" alt="">
     </a>
         <div class="card-body">
