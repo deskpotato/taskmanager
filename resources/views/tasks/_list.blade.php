@@ -21,7 +21,7 @@
                         <tr>
                         <td>
                         <span class="badge badge-secondary mr-3">{{$todo->updated_at->diffForHumans()}}</span>
-                          {{$todo->name}}
+                        <a href="{{route('tasks.show',$todo->id)}}"> {{$todo->name}}</a>
                         </td>
                         <td>@include('tasks._checkFrom')</td>
                         <td>@include('tasks._editFrom')</td>
