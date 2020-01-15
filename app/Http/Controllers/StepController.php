@@ -51,6 +51,8 @@ class StepController extends Controller
         // 'completion'=>0
         // ]);
 
+        // $step = $task->steps()->create($request->only('name')->refresh());
+
         return response()->json([
             'step'=>$step
         ],201);
@@ -87,9 +89,18 @@ class StepController extends Controller
      * @param  \App\Step  $step
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Step $step)
+    public function update(Request $request,Task $task, Step $step)
     {
-        //
+        $step->update([
+            'completion'=>$request->completion
+        ]);
+    }
+
+    public function completeAll(Task $task)
+    {
+        $task->steps()->update([
+            'completion'=>1
+        ]);
     }
 
     /**
@@ -105,5 +116,10 @@ class StepController extends Controller
         // return response()->json([
         //     'msg'=>'当前step删除成功'
         // ],204);
+    }
+
+    public function clear(Task $task)
+    {
+        $task->steps()->where('completion',1)->delete();
     }
 }

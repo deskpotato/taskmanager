@@ -30,6 +30,11 @@ Route::get('projects/{project}',['uses'=>'ProjectsController@show','as'=>'projec
 //resource路由
 Route::resource('tasks', 'TasksController');
 
+Route::post('tasks/{task}/steps/complete', 'StepController@completeAll');
+
+Route::delete('tasks/{task}/steps/clear', 'StepController@clear');
+
 Route::resource('tasks.steps', 'StepController');
+
 
 Route::post('tasks/{id}/check','TasksController@check')->name('tasks.check');
