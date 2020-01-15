@@ -27,6 +27,9 @@ Route::patch('projects/{project}',['uses'=>'ProjectsController@update','as'=>'pr
 Route::get('projects/{project}',['uses'=>'ProjectsController@show','as'=>'projects.show']);
 
 
+//resource路由
 Route::resource('tasks', 'TasksController');
+
+Route::resource('tasks.steps', 'StepController');
 
 Route::post('tasks/{id}/check','TasksController@check')->name('tasks.check');
