@@ -11,8 +11,8 @@
 </template>
 
 <script>
-    import { Hub } from '../event-bus.js'
-
+    import {Message} from 'element-ui'
+    import 'element-ui/lib/theme-chalk/index.css';
     export default {
         props:{
             'route':String
@@ -22,25 +22,18 @@
                 newStep:''
             }
         },
-        created(){
-            Hub.$on('edit',this.edit)
-        },
         methods:{
             
             addStep(){
                 axios.post(this.route,{'name':this.newStep}).then((res)=>{
-                    this.$emit('add',res.data.step)
-                    this.newStep = ''
+                    window.location.reload()
+                }).catch((err)=>{
+                    if(err.response.status ===422){
+
+                        Message.error(err.response.data.errors.name[0])
+                    }
                 })
-                // this.steps.push({'name':this.newStep,'completion':false})
-                // this.newStep = ''
             },
-            edit(step){
-                //在输入框中显示当前step的name
-                this.newStep = step.name
-                //focus当前的输入框
-                this.$refs.newStep.focus();
-            }
         }
         
     }

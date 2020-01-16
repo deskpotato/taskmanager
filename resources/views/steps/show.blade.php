@@ -5,6 +5,10 @@
      <h3>{{$task->name}}</h3>
      {{-- vue组件 --}}
   
-    <steps route="{{route('tasks.steps.index',$task->id)}}"></steps>
+<steps route="{{route('tasks.steps.index',$task->id)}}"  
+    :todos="{{$todos}}"
+    :dones="{{$dones}}"
+    >
+</steps>
 </div>
 @endsection

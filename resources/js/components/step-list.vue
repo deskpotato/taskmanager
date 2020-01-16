@@ -7,7 +7,8 @@
         <div class="card-body">
             <ul class="list-group">
                 <li class="list-group-item" v-for="(step,index) in steps">
-                    <span @dblclick="edit(step)">{{step.name}}</span>
+                    <span @dblclick="edit(step,index)" ref="stepName">{{step.name}}</span>
+                    <input type="text"  class="form-control" v-model="editStep" ref="stepInput" @keyup.enter="update(step)"  style="display:none;">
                     <span class="float-right">
                         <i class="fa fa-check" @click="toggle(step)"></i>
                         <i class="fa fa-times" @click="remove(step)"></i>
@@ -20,7 +21,6 @@
 
 <script>
 
-    import { Hub } from '../event-bus.js'
     
     export default {
         props:{
@@ -29,27 +29,31 @@
         },
         data(){
             return {
-
+                editStep:'',
             }
         },
         methods:{
 
             toggle(step){
-                axios.patch(`${this.route}/${step.id}`,{'completion':!step.completion}).then((res)=>{
-
-                    //steps是Array 双向数据传流
-                    step.completion = !step.completion
+                axios.patch(`${this.route}/${step.id}/toggle`,{'completion':!step.completion}).then((res)=>{
+                    window.location.reload()
                 })
             },
             remove(step){
                 axios.delete(`${this.route}/${step.id}`).then((res)=>{
-                    Hub.$emit('remove',step)
+                    window.location.reload()
                 })
             },
-            edit(step){
-                this.remove(step)
-                Hub.$emit('edit',step)
+            edit(step,index){
+                this.$refs.stepName[index].style.display = 'none'
+                this.$refs.stepInput[index].style.display = 'block'
+                this.editStep = step.name
             },
+            update(step){
+                 axios.patch(`${this.route}/${step.id}`,{'name':this.editStep}).then((res)=>{
+                    window.location.reload()
+                })
+            }
         }
 
     }
