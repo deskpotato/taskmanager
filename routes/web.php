@@ -27,6 +27,7 @@ Route::patch('projects/{project}',['uses'=>'ProjectsController@update','as'=>'pr
 Route::get('projects/{project}',['uses'=>'ProjectsController@show','as'=>'projects.show']);
 
 
+Route::get('tasks/search', 'TasksController@search');
 //resource路由
 Route::resource('tasks', 'TasksController');
 

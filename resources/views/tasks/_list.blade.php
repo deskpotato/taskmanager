@@ -39,7 +39,10 @@
 
             @foreach ($dones as $done)
                 <tr>
-                <td>{{$done->name}}</td>
+                <td> 
+                  <span class="badge badge-secondary mr-3">{{$done->updated_at->diffForHumans()}}</span>
+                  <a href="{{route('tasks.show',$done->id)}}"> {{$done->name}}</a>
+                </td>
                 </tr>
             @endforeach            
         </table>

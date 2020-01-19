@@ -33,6 +33,7 @@
                         <a href="{{route('tasks.index')}}" class="nav-link">所有任务</a>
                         </li>
                     </ul>
+                   <search></search>
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">

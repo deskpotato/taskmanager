@@ -33,6 +33,16 @@ class TasksController extends Controller
     }
 
     /**
+     * 搜索
+     */
+    public function search()
+    {
+        return response()->json([
+            'tasks'=>$this->repo->all()
+        ],200);
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
