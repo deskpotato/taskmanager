@@ -28,6 +28,8 @@ Route::get('projects/{project}',['uses'=>'ProjectsController@show','as'=>'projec
 
 
 Route::get('tasks/search', 'TasksController@search');
+
+Route::get('tasks/charts', 'TasksController@charts')->name('tasks.charts');
 //resource路由
 Route::resource('tasks', 'TasksController');
 

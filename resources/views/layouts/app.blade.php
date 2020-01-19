@@ -30,10 +30,15 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                        <a href="{{route('tasks.index')}}" class="nav-link">所有任务</a>
+                            <a href="{{route('tasks.index')}}" class="nav-link">所有任务</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('tasks.charts')}}" class="nav-link">图表统计</a>
                         </li>
                     </ul>
-                   <search></search>
+                    @auth
+                        <search></search>
+                    @endauth
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">

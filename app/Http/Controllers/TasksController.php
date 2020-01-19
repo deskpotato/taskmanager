@@ -42,6 +42,14 @@ class TasksController extends Controller
         ],200);
     }
 
+    public function charts()
+    {
+        $total  =  $this->repo->totalCount();
+        $todoCount  =  $this->repo->todoCount();
+        $doneCount  =  $this->repo->doneCount();
+        return view('tasks.charts',compact('total','todoCount','doneCount'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
