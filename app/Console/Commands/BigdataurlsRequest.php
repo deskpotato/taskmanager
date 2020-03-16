@@ -34,7 +34,7 @@ class BigdataurlsRequest extends Command
      *
      * @var string
      */
-    protected $description = 'generate url via pcode-param:run:  bigdata-urls pcode';
+    protected $description = 'Generate url via input param. Like artisian run:bigdata-urls 1';
 
     /**
      * Create a new command instance.

@@ -29,7 +29,7 @@ class BigdataRequest extends Command
      *
      * @var string
      */
-    protected $description = 'Scrapy bigdata via Guzzle';
+    protected $description = "Scrapy bigdata via Guzzle. Note：before execute this command, execute command [run:bigdata-urls]";
 
     /**
      * Create a new command instance.
