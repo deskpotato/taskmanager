@@ -54,7 +54,6 @@ class BigdataController extends Controller
                     }
                 }
             }
-            dd($sqldata);
 
             print_r('插入数据开始');
             //数据库插入数据
