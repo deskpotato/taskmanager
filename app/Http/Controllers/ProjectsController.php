@@ -8,6 +8,7 @@ use App\Project;
 use App\Repositories\ProjectsRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\App;
 
 class ProjectsController extends Controller
 {
@@ -23,8 +24,8 @@ class ProjectsController extends Controller
     public function index()
     {
         $projects  = $this->repo->list();
-        
-        return  view('welcome',compact('projects')); 
+
+        return  view('welcome',compact('projects'));
     }
 
     public function store(CreateProjectRequest $request)
@@ -39,12 +40,12 @@ class ProjectsController extends Controller
     // {
     //     $project->delete();
     //     return back();
-        
+
     // }
     public function destroy($id)
     {
         $this->repo->delete($id);
-        return back();    
+        return back();
     }
 
 
@@ -67,11 +68,11 @@ class ProjectsController extends Controller
         $this->repo->update($request,$id);
         return back();
     }
-   
 
 
 
 
 
-  
+
+
 }

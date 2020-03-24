@@ -21,6 +21,7 @@ class StepController extends Controller
     {
         // $task->steps()->get();
         // return $task->steps;
+
         return response()->json([
             'steps'=>$task->steps,
         ],200);
