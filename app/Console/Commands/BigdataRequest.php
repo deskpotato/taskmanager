@@ -74,7 +74,12 @@ class BigdataRequest extends Command
                 $this->info('当前请求的索引为： '.$index.' : '.$this->urls[$index]);
 
                 $areacode = $this->parse_areacode($index);
+
+//                $this->info('returndata： '.$response->getBody()->getContents());
+
                 $returndata = json_decode($response->getBody()->getContents(), true);
+
+
                 if ($returndata['returncode'] == 200) {
 
                     $sqldata = [];

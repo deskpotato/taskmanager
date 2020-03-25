@@ -12,7 +12,7 @@ class BigdataurlsRequest extends Command
     /**
      * pcode
      * 机械五金 1
-     * 橡胶塑料 8
+     * 橡胶塑料 18
      * 冶炼钢材 21
      * 化工精细 31
      * 纺织市场 42
@@ -34,7 +34,7 @@ class BigdataurlsRequest extends Command
      *
      * @var string
      */
-    protected $description = 'Generate url via input param. Like artisian run:bigdata-urls 1';
+    protected $description = 'Generate url via input param. Like artisan run:bigdata-urls 1';
 
     /**
      * Create a new command instance.
