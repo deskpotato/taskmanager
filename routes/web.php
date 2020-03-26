@@ -45,3 +45,9 @@ Route::post('tasks/{id}/check','TasksController@check')->name('tasks.check');
 //bigdata数据爬取路由-test
 
 //Route::get('bigdata','BigdataController@index')->name('bigdata');
+
+Route::get('showprofile','ShowProfile');
+
+Route::fallback(function (){
+    return "Have you lost yourself?";
+});
