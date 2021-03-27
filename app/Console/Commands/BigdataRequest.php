@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Bigdata;
+use Doctrine\DBAL\Schema\Index;
 use GuzzleHttp\Client;
 use GuzzleHttp\Pool;
 use Illuminate\Console\Command;
@@ -12,7 +13,7 @@ class BigdataRequest extends Command
 {
     private $totalPageCount;
     private $counter = 1;
-    private $concurrency = 7;  // 同时并发抓取
+    private $concurrency = 8;  // 同时并发抓取
 
     private $urls = [];
 
@@ -42,7 +43,7 @@ class BigdataRequest extends Command
         $urls_str = @file_get_contents(storage_path('urls.txt'));
         $urls_str  =trim($urls_str,"\n");
         $this->urls = explode("\n",$urls_str);
-//        dd($this->urls);
+    //    dd($this->urls);
     }
 
     /**
@@ -53,9 +54,19 @@ class BigdataRequest extends Command
     public function handle()
     {
 
+        //阿里因 IP代理 https://market.aliyun.com/products/57126001/cmapi00037885.html?spm=5176.2020520132.101.1.13e87218GNRUsj#sku=yuncode3188500001
         $this->totalPageCount = count($this->urls);
 
-        $client = new Client();
+
+        $client = new Client([
+            'verify'=>false,
+            'proxy'=>'192.162.192.148:55443'  //nibi
+            // 'proxy'=>'159.224.37.181:41065' //niubi
+            // 'proxy'=>'202.62.67.209:53281'
+            // 'proxy' => [
+            //     'http'  => 'tcp://183.232.231.239:80', 
+            // ]
+        ]);
 
 
         $requests = function ($total) use ($client) {
@@ -75,45 +86,54 @@ class BigdataRequest extends Command
 
                 $areacode = $this->parse_areacode($index);
                 $returndata = json_decode($response->getBody()->getContents(), true);
-                if ($returndata['returncode'] == 200) {
+                if(!empty($returndata)){
+                    if ($returndata['returncode'] == 200) {
 
-                    $sqldata = [];
-                    $wdnodes = $returndata['returndata']['wdnodes'];
-                    $nodes = $wdnodes[0]['nodes'];
-                    $tnodes = $wdnodes[2]['nodes'];
-                    $datanodes = $returndata['returndata']['datanodes'];
-
-                    foreach ($nodes as $k1 => $v1) {
-
-                        $code = $v1['code'];
-
-                        foreach ($tnodes as $k2 => $v2) {
-                            $sqldata[$k1][$k2]['tvalue'] = $v2['cname'];
-                            $sqldata[$k1][$k2]['code'] = $code;
-                            $sqldata[$k1][$k2]['titem'] = $v2['code'];
-                            $sqldata[$k1][$k2]['areacode'] = $areacode;
-                            foreach ($datanodes as $k3 => $v3) {
-                                if ($v3['code'] == ('zb.' . $code . '_reg.' . $areacode . '_sj.' . $sqldata[$k1][$k2]['titem'])) {
-                                    $sqldata[$k1][$k2]['t_data'] = $v3['data']['data'];
-                                    $sqldata[$k1][$k2]['t_str_data'] = $v3['data']['strdata'];
+                        $sqldata = [];
+                        $wdnodes = $returndata['returndata']['wdnodes'];
+                        $nodes = $wdnodes[0]['nodes'];
+                        $tnodes = $wdnodes[2]['nodes'];
+                        $datanodes = $returndata['returndata']['datanodes'];
+    
+                        foreach ($nodes as $k1 => $v1) {
+    
+                            $code = $v1['code'];
+    
+                            foreach ($tnodes as $k2 => $v2) {
+                                $sqldata[$k1][$k2]['tvalue'] = $v2['cname'];
+                                $sqldata[$k1][$k2]['code'] = $code;
+                                $sqldata[$k1][$k2]['titem'] = $v2['code'];
+                                $sqldata[$k1][$k2]['areacode'] = $areacode;
+                                foreach ($datanodes as $k3 => $v3) {
+                                    if ($v3['code'] == ('zb.' . $code . '_reg.' . $areacode . '_sj.' . $sqldata[$k1][$k2]['titem'])) {
+                                        $sqldata[$k1][$k2]['t_data'] = $v3['data']['data'];
+                                        $sqldata[$k1][$k2]['t_str_data'] = $v3['data']['strdata'];
+                                    }
                                 }
                             }
                         }
+    
+                        //数据入库
+                        $this->insertTable($sqldata);
+    
+                        $this->info('索引为'.$index.'的请求数据处理完毕');
+    
+    
+    
                     }
-
-                    //数据入库
-                    $this->insertTable($sqldata);
-
-                    $this->info('索引为'.$index.'的请求数据处理完毕');
-
+                }else{
+                    $this->error("请求数据返回为null,index值为：".$index);
+                    file_put_contents(storage_path('null.txt'),$this->urls[$index]."\n",FILE_APPEND);
                 }
+                
 
             },
             'rejected' => function ($reason, $index) {
-                Log::error("rejected，索引为: ".$index.' : '.$this->urls[$index]);
+                // Log::error("rejected，索引为: ".$index.' : '.$this->urls[$index]);
                 $this->error("rejected，索引为: ".$index.' : '.$this->urls[$index]);
-                $this->error("rejected reason: " . $reason);
-                $this->countedAndCheckEnded();
+                file_put_contents(storage_path('rejected.txt'),$this->urls[$index]."\n",FILE_APPEND);
+                // $this->error("rejected reason: " . $reason);
+                // $this->countedAndCheckEnded();
             },
         ]);
 

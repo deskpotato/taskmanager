@@ -3,7 +3,7 @@
 
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 6.10.0 on 2020-04-01 03:01:01.
+ * Generated for Laravel 6.10.0 on 2020-07-20 03:06:59.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -7990,45 +7990,6 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Delete a message from the Beanstalk queue.
-         *
-         * @param string $queue
-         * @param string|int $id
-         * @return void 
-         * @static 
-         */ 
-        public static function deleteMessage($queue, $id)
-        {
-                        /** @var \Illuminate\Queue\BeanstalkdQueue $instance */
-                        $instance->deleteMessage($queue, $id);
-        }
-        
-        /**
-         * Get the queue or return the default.
-         *
-         * @param string|null $queue
-         * @return string 
-         * @static 
-         */ 
-        public static function getQueue($queue)
-        {
-                        /** @var \Illuminate\Queue\BeanstalkdQueue $instance */
-                        return $instance->getQueue($queue);
-        }
-        
-        /**
-         * Get the underlying Pheanstalk instance.
-         *
-         * @return \Pheanstalk\Pheanstalk 
-         * @static 
-         */ 
-        public static function getPheanstalk()
-        {
-                        /** @var \Illuminate\Queue\BeanstalkdQueue $instance */
-                        return $instance->getPheanstalk();
-        }
-        
-        /**
          * Get the retry delay for an object-based queue handler.
          *
          * @param mixed $job
@@ -8038,7 +7999,7 @@ namespace Illuminate\Support\Facades {
         public static function getJobRetryDelay($job)
         {
             //Method inherited from \Illuminate\Queue\Queue            
-                        /** @var \Illuminate\Queue\BeanstalkdQueue $instance */
+                        /** @var \Illuminate\Queue\SyncQueue $instance */
                         return $instance->getJobRetryDelay($job);
         }
         
@@ -8052,7 +8013,7 @@ namespace Illuminate\Support\Facades {
         public static function getJobExpiration($job)
         {
             //Method inherited from \Illuminate\Queue\Queue            
-                        /** @var \Illuminate\Queue\BeanstalkdQueue $instance */
+                        /** @var \Illuminate\Queue\SyncQueue $instance */
                         return $instance->getJobExpiration($job);
         }
         
@@ -8066,7 +8027,7 @@ namespace Illuminate\Support\Facades {
         public static function createPayloadUsing($callback)
         {
             //Method inherited from \Illuminate\Queue\Queue            
-                        \Illuminate\Queue\BeanstalkdQueue::createPayloadUsing($callback);
+                        \Illuminate\Queue\SyncQueue::createPayloadUsing($callback);
         }
         
         /**
@@ -8079,7 +8040,7 @@ namespace Illuminate\Support\Facades {
         public static function setContainer($container)
         {
             //Method inherited from \Illuminate\Queue\Queue            
-                        /** @var \Illuminate\Queue\BeanstalkdQueue $instance */
+                        /** @var \Illuminate\Queue\SyncQueue $instance */
                         $instance->setContainer($container);
         }
          

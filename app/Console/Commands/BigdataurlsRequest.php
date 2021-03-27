@@ -11,16 +11,16 @@ class BigdataurlsRequest extends Command
 
     /**
      * pcode
-     * 机械五金 1
-     * 橡胶塑料 8
-     * 冶炼钢材 21
-     * 化工精细 31
-     * 纺织市场 42
-     * 电子电工 45
-     * 电力能源 49
-     * 数码家电 53
-     * 食品饮料 64
-     * 日用百货 68
+     * 机械五金 1  ✔
+     * 橡胶塑料 18 ✔
+     * 冶炼钢材 21 ✔
+     * 化工精细 31 ✔
+     * 纺织市场 42 ✔
+     * 电子电工 45 ✔
+     * 电力能源 49 ✔
+     * 数码家电 53 ✔ ✔
+     * 食品饮料 64 ✔ ✔
+     * 日用百货 68 ✔ ✔
      */
     /**
      * The name and signature of the console command.
@@ -34,7 +34,7 @@ class BigdataurlsRequest extends Command
      *
      * @var string
      */
-    protected $description = 'Generate url via input param. Like artisian run:bigdata-urls 1';
+    protected $description = 'Generate url via input param. Like artisan run:bigdata-urls 1';
 
     /**
      * Create a new command instance.
@@ -63,7 +63,7 @@ class BigdataurlsRequest extends Command
 
         foreach ($hangyeArr as $k1 => $v1) {
 
-            $str = "http://data.stats.gov.cn/easyquery.htm?m=QueryData&dbcode=fsyd&rowcode=zb&colcode=sj&dfwds=" . '[{"wdcode":"zb","valuecode":"' . $v1['code'] . '"}]' . "&k1=" . time();
+            $str = "https://data.stats.gov.cn/easyquery.htm?m=QueryData&dbcode=fsyd&rowcode=zb&colcode=sj&dfwds=" . '[{"wdcode":"zb","valuecode":"' . $v1['code'] . '"}]' . "&k1=" . time();
             $area_str = '';
             foreach ($areaArr as $k2 => $v2) {
                 $area_str = "&wds=" . '[{"wdcode":"reg","valuecode":"' . $v2['code'] . '"}]';
